@@ -1,0 +1,108 @@
+buildscript {
+    ext.kotlin_version = '1.2.21'
+    ext.vertx_version = '3.5.1'
+
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id 'io.vertx.vertx-plugin' version '0.0.4'
+}
+
+group 'Path2Learn'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'kotlin'
+//apply plugin: 'kotlin-kapt'
+
+
+repositories {
+    jcenter()
+}
+
+vertx {
+    mainClassName = "paths.MainVerticleKt"
+    mainVerticle = "paths.MainVerticle"
+    vertxVersion = "3.5.1"
+    config = "src/main/resources/application-conf.json"
+    // redeploy = false  //  -> The command '--conf' is not a valid command.
+    // onRedeploy = ["hello"]  // Doesn't seem to do anything.
+}
+
+dependencies {
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    compile "io.vertx:vertx-lang-js:$vertx_version"
+    compile "io.vertx:vertx-lang-kotlin:$vertx_version"
+    compile "io.vertx:vertx-lang-kotlin-coroutines:$vertx_version"
+
+    compile "io.vertx:vertx-web:$vertx_version"
+    compile "io.vertx:vertx-auth-jwt:$vertx_version"
+    compile "io.vertx:vertx-web-api-contract:$vertx_version"
+    compile "io.vertx:vertx-config:$vertx_version"
+    compile "io.vertx:vertx-config-yaml:$vertx_version"
+    compile "io.vertx:vertx-service-discovery:$vertx_version"
+    compile "io.vertx:vertx-service-proxy:$vertx_version"
+    compile "io.vertx:vertx-shell:$vertx_version"
+
+    //kapt "io.vertx:vertx-codegen:$vertx_version:processor"
+    compileOnly "io.vertx:vertx-codegen:$vertx_version"
+
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.0"
+
+    testCompile "junit:junit:4.12"
+    testCompile "io.vertx:vertx-unit:$vertx_version"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+task annotationProcessing(type:  JavaCompile, group: 'build') { // codegen
+    source = sourceSets.main.java
+    source += sourceSets.main.kotlin
+    classpath = configurations.compile + configurations.compileOnly
+    destinationDir = project.file('src/main/generated')
+    options.compilerArgs = [
+            "-proc:only",
+            "-processor", "io.vertx.codegen.CodeGenProcessor",
+            "-Acodegen.output=${project.projectDir}/src/main"
+    ]
+}
+
+compileJava {
+    targetCompatibility = 1.8
+    sourceCompatibility = 1.8
+
+    dependsOn annotationProcessing
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += 'src/main/generated'
+        }
+    }
+}
+
+
+//class GreetingTask extends DefaultTask {
+//    @TaskAction
+//    def greet() {
+//        println 'hello from GreetingTask'
+//    }
+//}
+//
+//// Create a task using the task type
+//task hello(type: GreetingTask)
+

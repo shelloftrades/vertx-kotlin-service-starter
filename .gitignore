@@ -1,0 +1,29 @@
+.gradle
+gradle
+out
+.vertx
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### Mac Stuff ###
+.DS_Store
+
+### VSCode ###
+.vscode/
+
+### Project specific ###
+runtime/

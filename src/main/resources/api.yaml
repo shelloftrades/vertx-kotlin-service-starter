@@ -1,0 +1,244 @@
+openapi: 3.0.0
+info:
+  title: Path 2 Learn API
+  description: A API that allows interacting with Paths
+  contact:
+    name: Apsel API Team
+    url: https://apsel.io/api
+    email: api@apsel.io
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  version: 0.1.0
+servers:
+- url: https://dev.path.apsel.io
+  description: Dev server
+- url: https://demo.api.path.apsel.io
+  description: Demo server
+- url: https://api.path.apsel.io
+  description: Production server
+
+paths:
+  /authenticate:
+    post:  # WARNING should be POST and NEVER USE QUERY PARAMETERS!!
+      description: Authenticate
+      operationId: authenticate-password
+#      parameters:
+#        - name: username
+#          in:
+#          description: Username
+#          required: true
+#          schema:
+#            type: string
+#        - name: password
+#          in: query
+#          description: password for the user
+#          required: true
+#          schema:
+#            type: string
+      requestBody:
+        description: Parameters required to login
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        200:
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        default:
+          $ref: '#/components/responses/500'
+
+  /test:
+    get:
+      description: Test stuff
+      operationId: getTest
+      responses:
+        200:
+          description: Flow response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Flow'
+        default:
+          $ref: '#/components/responses/500'
+  /flows:
+    get:
+      description: Get a list of flows
+      operationId: getFlows
+      parameters:
+      - name: tags
+        in: query
+        description: Tagd to filter the type of flow to return
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        style: form
+        explode: false
+
+      - name: limit
+        in: query
+        description: How many item to return (default 20)
+        required: false
+        schema:
+          format: int32
+          default: 20
+          type: integer
+      responses:
+        200:
+          description: Flow response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Flow'
+        default:
+          $ref: '#/components/responses/500'
+    post:
+      description: Add a flow
+      operationId: addFlow
+      responses:
+        200:
+          description: Flow response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flow'
+        default:
+          $ref: '#/components/responses/500'
+      requestBody:
+        description: Flow to add to the collection
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewFlow'
+        required: true
+  /flows/{id}:
+    get:
+      description: Get a specific flow
+      operationId: getOneFlow
+      parameters:
+      - name: id
+        in: path
+        description: the id of the flow
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        200:
+          description: Successful reponse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Flow'
+        default:
+          $ref: '#/components/responses/500'
+components:
+  schemas:
+
+    Error:
+      required:
+      - code
+      - message
+      properties:
+        code:
+          description: Machine readable error code
+          type: string
+        message:
+          description: User presentable message
+          type: string
+
+    Login:
+      required:
+      - username
+      - password
+      properties:
+        username:
+          description: The username
+          type: string
+        password:
+          description: The password
+          type: string
+    Token:
+      required:
+      - token
+      properties:
+        token:
+          description: The user ID
+          type: string
+
+
+    NewFlow:
+      required:
+      - name
+      - peanut
+      properties:
+        name:
+          description: Name of this flow
+          type: string
+        creation_date:
+          type: string
+        location:
+          type: string
+        style:
+          type: string
+        peanut:
+          type: string
+        joe:
+          type: string
+    metadata:
+      title: Metadata
+      description: The root of the metadata type's schema.
+      required:
+      - created_by
+      - created_by
+      - last_modified_by
+      - last_modified
+      - owned_by
+      type: object
+      properties:
+        created_date:
+          format: date-time
+          description: When it was created
+          type: string
+        created_by:
+          description: Who created it
+          type: string
+        last_modified:
+          format: date-time
+          description: When it was modified
+          type: string
+        last_modified_by:
+          description: Who modified it
+          type: string
+        owned_by:
+          description: Who is currently owning it
+          type: string
+    Flow:
+      allOf:
+      - $ref: '#/components/schemas/NewFlow'
+      - required:
+        - id
+        properties:
+          id:
+            format: int64
+            type: integer
+  responses:
+    500:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+tags:
+- name: Flow
+  description:
