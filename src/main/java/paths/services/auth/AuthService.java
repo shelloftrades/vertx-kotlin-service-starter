@@ -1,4 +1,4 @@
-package paths.services;
+package paths.services.auth;
 
 import io.vertx.codegen.annotations.ProxyGen;
 import io.vertx.codegen.annotations.VertxGen;

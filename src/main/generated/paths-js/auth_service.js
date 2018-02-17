@@ -19,7 +19,7 @@ var utils = require('vertx-js/util/utils');
 
 var io = Packages.io;
 var JsonObject = io.vertx.core.json.JsonObject;
-var JAuthService = Java.type('paths.services.AuthService');
+var JAuthService = Java.type('paths.services.auth.AuthService');
 
 /**
  The service interface.
@@ -57,7 +57,7 @@ var AuthService = function(j_val) {
   this._jdel = j_authService;
 };
 
-AuthService._jclass = utils.getJavaClass("paths.services.AuthService");
+AuthService._jclass = utils.getJavaClass("paths.services.auth.AuthService");
 AuthService._jtype = {
   accept: function(obj) {
     return AuthService._jclass.isInstance(obj._jdel);

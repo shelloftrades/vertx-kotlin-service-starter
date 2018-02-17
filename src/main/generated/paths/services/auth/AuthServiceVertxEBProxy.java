@@ -14,9 +14,9 @@
 * under the License.
 */
 
-package paths.services;
+package paths.services.auth;
 
-import paths.services.AuthService;
+import paths.services.auth.AuthService;
 import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.Vertx;
 import io.vertx.core.Future;

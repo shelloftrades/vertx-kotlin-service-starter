@@ -11,7 +11,6 @@ import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
 import io.vertx.kotlin.ext.auth.KeyStoreOptions
 import io.vertx.kotlin.ext.jwt.JWTOptions
-import paths.services.AuthService
 
 class AuthServiceImpl(vertx:Vertx, options: AuthServiceOption) : AuthService {
     private val logger = LoggerFactory.getLogger(this::class.qualifiedName)

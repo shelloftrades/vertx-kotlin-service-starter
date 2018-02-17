@@ -14,9 +14,9 @@
 * under the License.
 */
 
-package paths.services;
+package paths.services.auth;
 
-import paths.services.SampleService;
+import paths.services.auth.AuthService;
 import io.vertx.core.Vertx;
 import io.vertx.core.Handler;
 import io.vertx.core.AsyncResult;
@@ -39,7 +39,6 @@ import io.vertx.serviceproxy.ProxyHelper;
 import io.vertx.serviceproxy.ProxyHandler;
 import io.vertx.serviceproxy.ServiceException;
 import io.vertx.serviceproxy.ServiceExceptionMessageCodec;
-import io.vertx.core.json.JsonObject;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 
@@ -48,25 +47,25 @@ import io.vertx.core.Handler;
   @author Roger the Robot
 */
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class SampleServiceVertxProxyHandler extends ProxyHandler {
+public class AuthServiceVertxProxyHandler extends ProxyHandler {
 
   public static final long DEFAULT_CONNECTION_TIMEOUT = 5 * 60; // 5 minutes 
 
   private final Vertx vertx;
-  private final SampleService service;
+  private final AuthService service;
   private final long timerID;
   private long lastAccessed;
   private final long timeoutSeconds;
 
-  public SampleServiceVertxProxyHandler(Vertx vertx, SampleService service) {
+  public AuthServiceVertxProxyHandler(Vertx vertx, AuthService service) {
     this(vertx, service, DEFAULT_CONNECTION_TIMEOUT);
   }
 
-  public SampleServiceVertxProxyHandler(Vertx vertx, SampleService service, long timeoutInSecond) {
+  public AuthServiceVertxProxyHandler(Vertx vertx, AuthService service, long timeoutInSecond) {
     this(vertx, service, true, timeoutInSecond);
   }
 
-  public SampleServiceVertxProxyHandler(Vertx vertx, SampleService service, boolean topLevel, long timeoutSeconds) {
+  public AuthServiceVertxProxyHandler(Vertx vertx, AuthService service, boolean topLevel, long timeoutSeconds) {
     this.vertx = vertx;
     this.service = service;
     this.timeoutSeconds = timeoutSeconds;
@@ -114,8 +113,8 @@ public class SampleServiceVertxProxyHandler extends ProxyHandler {
       }
       accessed();
       switch (action) {
-        case "process": {
-          service.process((io.vertx.core.json.JsonObject)json.getValue("document"), createHandler(msg));
+        case "authenticate": {
+          service.authenticate((java.lang.String)json.getValue("login"), (java.lang.String)json.getValue("password"), createHandler(msg));
           break;
         }
         default: {

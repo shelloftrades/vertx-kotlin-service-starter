@@ -19,7 +19,7 @@ var utils = require('vertx-js/util/utils');
 
 var io = Packages.io;
 var JsonObject = io.vertx.core.json.JsonObject;
-var JSampleService = Java.type('paths.services.SampleService');
+var JSampleService = Java.type('paths.services.sample.SampleService');
 
 /**
  The service interface.
@@ -34,15 +34,15 @@ var SampleService = function(j_val) {
   /**
 
    @public
-   @param document {Object} 
+   @param text {string} 
    @param resultHandler {function} 
    */
-  this.process = function(document, resultHandler) {
+  this.reverse = function(text, resultHandler) {
     var __args = arguments;
-    if (__args.length === 2 && (typeof __args[0] === 'object' && __args[0] != null) && typeof __args[1] === 'function') {
-      j_sampleService["process(io.vertx.core.json.JsonObject,io.vertx.core.Handler)"](utils.convParamJsonObject(document), function(ar) {
+    if (__args.length === 2 && typeof __args[0] === 'string' && typeof __args[1] === 'function') {
+      j_sampleService["reverse(java.lang.String,io.vertx.core.Handler)"](text, function(ar) {
       if (ar.succeeded()) {
-        resultHandler(utils.convReturnJson(ar.result()), null);
+        resultHandler(ar.result(), null);
       } else {
         resultHandler(null, ar.cause());
       }
@@ -56,7 +56,7 @@ var SampleService = function(j_val) {
   this._jdel = j_sampleService;
 };
 
-SampleService._jclass = utils.getJavaClass("paths.services.SampleService");
+SampleService._jclass = utils.getJavaClass("paths.services.sample.SampleService");
 SampleService._jtype = {
   accept: function(obj) {
     return SampleService._jclass.isInstance(obj._jdel);

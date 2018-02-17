@@ -5,9 +5,10 @@ import io.vertx.core.CompositeFuture
 import io.vertx.core.Future
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.core.DeploymentOptions
-import paths.services.api.KAPIVerticle
+import paths.services.api.RestApiVerticle
 import paths.services.auth.AuthVerticle
-import paths.services.auth.AuthVerticleV2
+import paths.services.sample.SampleServiceBusConsumerVerticle
+import paths.services.sample.SampleServiceBusVerticle
 
 
 @Suppress("unused")
@@ -25,17 +26,11 @@ class MainVerticle : AbstractVerticle() {
 
         // Deploy all the verticles we need
         CompositeFuture.all(
-            deploy(AuthVerticleV2::class.qualifiedName?: "", serverOpts)
-                //, deploy(APIVerticle::class.qualifiedName?: "", serverOpts)
-                , deploy(KAPIVerticle::class.qualifiedName?: "", serverOpts)
-                //, deploy(KAbstractServiceVerticle::class.qualifiedName?: "", serverOpts)
-
-
-                //, deploy(FlowVerticle::class.qualifiedName?: "", serverOpts)
-            //, deploy(SampleServiceBusVerticle::class.qualifiedName?: "", serverOpts)
-            //, deploy(SampleServiceBusConsumerVerticle::class.qualifiedName?: "", serverOpts)
-            , deploy(NoopVerticle::class.qualifiedName?: "", serverOpts)
-            , deploy("io.vertx.ext.shell.ShellVerticle", serverOpts)
+            deploy(AuthVerticle::class.qualifiedName?: "", serverOpts),
+                deploy(RestApiVerticle::class.qualifiedName?: "", serverOpts),
+                deploy(SampleServiceBusVerticle::class.qualifiedName?: "", serverOpts),
+                deploy(SampleServiceBusConsumerVerticle::class.qualifiedName?: "", serverOpts),
+                deploy("io.vertx.ext.shell.ShellVerticle", serverOpts)
 
             // <-- Add verticle here
 
