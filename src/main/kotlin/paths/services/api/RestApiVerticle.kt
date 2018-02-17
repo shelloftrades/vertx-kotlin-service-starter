@@ -12,8 +12,8 @@ import io.vertx.servicediscovery.ServiceDiscovery
 import io.vertx.serviceproxy.ServiceProxyBuilder
 import kotlinx.coroutines.experimental.async
 import paths.services.AbstractHttpServiceVerticle
-import paths.services.auth.AuthVerticle
 import paths.services.auth.AuthService
+import paths.services.auth.AuthVerticle
 
 @Suppress("unused")
 class RestApiVerticle : AbstractHttpServiceVerticle() {
@@ -22,13 +22,14 @@ class RestApiVerticle : AbstractHttpServiceVerticle() {
         const val CONFIG_PORT_KEY = "api.http.port"
         const val CONFIG_PORT_DEFAULT = 8080
     }
+
     private val logger = LoggerFactory.getLogger(this::class.qualifiedName)
 
     override suspend fun start() {
         logger.info("Starting " + this::class.qualifiedName)
 
         // Using coroutine 'awaitResult'
-        val factory = awaitResult<OpenAPI3RouterFactory> { f -> OpenAPI3RouterFactory.create(vertx, "src/main/resources/api.yaml", f)  }
+        val factory = awaitResult<OpenAPI3RouterFactory> { f -> OpenAPI3RouterFactory.create(vertx, "src/main/resources/api.yaml", f) }
 
         // Install the handlers
         factory.addHandlerByOperationId("authenticate-password", Handler<RoutingContext>(this::authenticate))
@@ -72,15 +73,15 @@ class RestApiVerticle : AbstractHttpServiceVerticle() {
                 it.succeeded() -> {
                     logger.info("Successful authentication for '$username'")
                     context.response()
-                        .setStatusCode(200)
-                            .endWithJson(json {obj("token" to it.result() )})
+                            .setStatusCode(200)
+                            .endWithJson(json { obj("token" to it.result()) })
                 }
                 else -> {
                     logger.error("Authentication failure for '$username'", it.cause())
 
                     context.response()
-                        .setStatusCode(401)
-                        .end("Authentication failed")
+                            .setStatusCode(401)
+                            .end("Authentication failed")
                 }
             }
         }
@@ -113,12 +114,12 @@ class RestApiVerticle : AbstractHttpServiceVerticle() {
                             // Don't forget to release the service
                             ServiceDiscovery.releaseServiceObject(discovery, client)
                             // End the response
-                            context.response().endWithJson(json { obj ("token" to token)})
+                            context.response().endWithJson(json { obj("token" to token) })
                         }
                     }
                 }
                 else -> {
-                    context.response().endWithJson(json { obj ("token" to "failed")})
+                    context.response().endWithJson(json { obj("token" to "failed") })
                 }
             }
         }

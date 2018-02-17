@@ -1,7 +1,5 @@
 package paths.services.sample
 
-import io.vertx.core.AbstractVerticle
-import io.vertx.core.Future
 import io.vertx.core.eventbus.MessageConsumer
 import io.vertx.core.json.JsonObject
 import io.vertx.kotlin.coroutines.CoroutineVerticle

@@ -12,7 +12,7 @@ import io.vertx.kotlin.core.json.obj
 import io.vertx.kotlin.ext.auth.KeyStoreOptions
 import io.vertx.kotlin.ext.jwt.JWTOptions
 
-class AuthServiceImpl(vertx:Vertx, options: AuthServiceOption) : AuthService {
+class AuthServiceImpl(vertx: Vertx, options: AuthServiceOption) : AuthService {
     private val logger = LoggerFactory.getLogger(this::class.qualifiedName)
     private val jwt: JWTAuth
     private val jwtOptions = JWTOptions(expiresInSeconds = 60)
@@ -39,8 +39,7 @@ class AuthServiceImpl(vertx:Vertx, options: AuthServiceOption) : AuthService {
         logger.info("Authenticate request for '$username'")
 
         // Dummy validation method
-        if (password != username)
-        {
+        if (password != username) {
             // Login failed... woohoo
             resultHandler.handle(Future.failedFuture("Invalid credentials"))
             logger.info("Authentication failure for '$username'")

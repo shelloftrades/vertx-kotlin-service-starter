@@ -19,8 +19,8 @@ class AuthVerticle : AbstractBusServiceVerticle() {
         logger.info("Starting " + this::class.qualifiedName)
 
         val options = AuthServiceImpl.AuthServiceOption(
-            config().getString("auth.keystore"),
-            config().getString("auth.keystore.password")
+                config().getString("auth.keystore"),
+                config().getString("auth.keystore.password")
         )
 
         //

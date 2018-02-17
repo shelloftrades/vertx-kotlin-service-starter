@@ -21,14 +21,14 @@ data class Metadata(
         val modification_date: LocalDateTime,
         val modified_by: UserSummary,
         val owner: UserSummary
-        )
+)
 
 data class Flow(
         val metadata: Metadata,
         val id: Int,
         val title: String,
         val Media: String
-        )
+)
 
 
 data class Country(val name: String, val code: String)

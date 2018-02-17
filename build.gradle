@@ -68,7 +68,7 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-task annotationProcessing(type:  JavaCompile, group: 'build') { // codegen
+task annotationProcessing(type: JavaCompile, group: 'build') { // codegen
     source = sourceSets.main.java
     source += sourceSets.main.kotlin
     classpath = configurations.compile + configurations.compileOnly
@@ -94,15 +94,8 @@ sourceSets {
         }
     }
 }
-
-
-//class GreetingTask extends DefaultTask {
-//    @TaskAction
-//    def greet() {
-//        println 'hello from GreetingTask'
-//    }
-//}
-//
-//// Create a task using the task type
-//task hello(type: GreetingTask)
-
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}

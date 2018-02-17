@@ -1,18 +1,17 @@
 package paths.services
 
-import io.vertx.core.*
+import io.vertx.core.Future
 import io.vertx.core.http.HttpClient
+import io.vertx.core.http.HttpServer
 import io.vertx.core.http.HttpServerResponse
+import io.vertx.core.json.JsonObject
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.ext.web.Router
+import io.vertx.kotlin.coroutines.CoroutineVerticle
+import io.vertx.kotlin.coroutines.awaitResult
 import io.vertx.servicediscovery.Record
 import io.vertx.servicediscovery.ServiceDiscovery
 import io.vertx.servicediscovery.types.HttpEndpoint
-import io.vertx.core.http.HttpServer
-import io.vertx.core.json.JsonObject
-import io.vertx.kotlin.coroutines.CoroutineVerticle
-import io.vertx.kotlin.coroutines.await
-import io.vertx.kotlin.coroutines.awaitResult
 import kotlinx.coroutines.experimental.async
 import paths.models.FlowController
 
@@ -32,9 +31,9 @@ abstract class AbstractHttpServiceVerticle : CoroutineVerticle() {
     suspend fun startServer(port: Int, router: Router) {
 
         server = awaitResult<HttpServer> { f ->
-                vertx.createHttpServer()
-                .requestHandler { router.accept(it) }
-                .listen(port, f)
+            vertx.createHttpServer()
+                    .requestHandler { router.accept(it) }
+                    .listen(port, f)
         }
 
         // if the server cannot start we should get an exception
@@ -60,10 +59,10 @@ abstract class AbstractHttpServiceVerticle : CoroutineVerticle() {
     /**
      * Publish the service record
      */
-    suspend fun publishServiceRecord(name: String, host:String, port:Int, root: String) {
+    suspend fun publishServiceRecord(name: String, host: String, port: Int, root: String) {
         logger.info("Publishing service:")
         val record = HttpEndpoint.createRecord(name, host, port, root)
-        this.record = awaitResult<Record> { f ->  discovery.publish(record, f) }
+        this.record = awaitResult<Record> { f -> discovery.publish(record, f) }
         logger.info("Service published")
     }
 
@@ -85,8 +84,7 @@ abstract class AbstractHttpServiceVerticle : CoroutineVerticle() {
     }
 
     private suspend fun shutdownServer() {
-        if (server != null)
-        {
+        if (server != null) {
             awaitResult<Void> { f -> server?.close(f) }
             server = null
         }
@@ -105,8 +103,7 @@ abstract class AbstractHttpServiceVerticle : CoroutineVerticle() {
 
         if (data is JsonObject) {
             this.end(data.encodePrettily())
-        }
-        else {
+        } else {
             this.end(io.vertx.core.json.Json.encodePrettily(data))
         }
     }

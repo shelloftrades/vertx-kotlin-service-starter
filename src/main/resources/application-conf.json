@@ -1,7 +1,7 @@
 {
-
-  "telnetOptions": { "port": 5000 },
-
+  "telnetOptions": {
+    "port": 5000
+  },
   "api.http.port": 8080,
   "auth.keystore": "security-dev/keystore.pkcs12",
   "auth.keystore.password": "secret"
