@@ -1,4 +1,4 @@
-package paths.auth
+package paths.services.auth
 
 import io.vertx.core.AsyncResult
 import io.vertx.core.Future

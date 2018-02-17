@@ -1,4 +1,4 @@
-package paths
+package paths.services
 
 import io.vertx.core.AbstractVerticle
 import io.vertx.core.CompositeFuture
@@ -12,6 +12,7 @@ import io.vertx.servicediscovery.ServiceDiscovery
 import io.vertx.servicediscovery.types.HttpEndpoint
 import io.vertx.core.http.HttpServer
 import io.vertx.core.json.JsonObject
+import paths.models.FlowController
 
 
 @Suppress("unused")

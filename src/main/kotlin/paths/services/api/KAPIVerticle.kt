@@ -1,7 +1,5 @@
-package paths.api
+package paths.services.api
 
-import io.vertx.core.CompositeFuture
-import io.vertx.core.Future
 import io.vertx.core.Handler
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.ext.web.RoutingContext
@@ -13,9 +11,8 @@ import io.vertx.kotlin.coroutines.awaitResult
 import io.vertx.servicediscovery.ServiceDiscovery
 import io.vertx.serviceproxy.ServiceProxyBuilder
 import kotlinx.coroutines.experimental.async
-import paths.AbstractServiceVerticle
-import paths.KAbstractServiceVerticle
-import paths.auth.AuthVerticleV2
+import paths.services.KAbstractServiceVerticle
+import paths.services.auth.AuthVerticleV2
 import paths.services.AuthService
 
 @Suppress("unused")
@@ -26,7 +23,6 @@ class KAPIVerticle : KAbstractServiceVerticle() {
         const val CONFIG_PORT_DEFAULT = 8080
     }
     private val logger = LoggerFactory.getLogger(this::class.qualifiedName)
-
 
     private fun authenticate(context: RoutingContext) {
         logger.info("Authenticating")

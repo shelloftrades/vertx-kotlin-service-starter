@@ -1,4 +1,4 @@
-package paths.api
+package paths.services.api
 
 import io.vertx.core.CompositeFuture
 import io.vertx.core.Future
@@ -11,8 +11,8 @@ import io.vertx.kotlin.core.json.json
 import io.vertx.kotlin.core.json.obj
 import io.vertx.servicediscovery.ServiceDiscovery
 import io.vertx.serviceproxy.ServiceProxyBuilder
-import paths.AbstractServiceVerticle
-import paths.auth.AuthVerticleV2
+import paths.services.AbstractServiceVerticle
+import paths.services.auth.AuthVerticleV2
 import paths.services.AuthService
 
 @Suppress("unused")

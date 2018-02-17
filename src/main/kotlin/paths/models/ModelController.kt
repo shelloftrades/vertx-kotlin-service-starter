@@ -1,4 +1,4 @@
-package paths
+package paths.models
 
 import paths.models.*
 import java.time.LocalDateTime

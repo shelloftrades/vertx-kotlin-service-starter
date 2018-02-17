@@ -1,4 +1,4 @@
-package paths.sample
+package paths.services.sample
 
 import io.vertx.core.AsyncResult
 import io.vertx.core.Future

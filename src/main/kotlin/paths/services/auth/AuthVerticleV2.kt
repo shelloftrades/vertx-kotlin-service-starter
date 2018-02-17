@@ -1,10 +1,10 @@
-package paths.auth
+package paths.services.auth
 
 import io.vertx.core.Future
 import io.vertx.core.logging.LoggerFactory
 
 import io.vertx.serviceproxy.ServiceBinder
-import paths.AbstractBusServiceVerticle
+import paths.services.AbstractBusServiceVerticle
 import paths.services.AuthService
 
 @Suppress("unused")

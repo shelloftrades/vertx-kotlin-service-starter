@@ -1,4 +1,4 @@
-package paths.auth
+package paths.services.auth
 
 import io.vertx.core.CompositeFuture
 import io.vertx.core.Future
@@ -11,7 +11,7 @@ import io.vertx.kotlin.core.json.obj
 
 import io.vertx.kotlin.ext.auth.KeyStoreOptions
 import io.vertx.kotlin.ext.jwt.JWTOptions
-import paths.AbstractServiceVerticle
+import paths.services.AbstractServiceVerticle
 
 
 @Suppress("unused")

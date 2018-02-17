@@ -5,10 +5,9 @@ import io.vertx.core.CompositeFuture
 import io.vertx.core.Future
 import io.vertx.core.logging.LoggerFactory
 import io.vertx.core.DeploymentOptions
-import paths.api.APIVerticle
-import paths.api.KAPIVerticle
-import paths.auth.AuthVerticle
-import paths.auth.AuthVerticleV2
+import paths.services.api.KAPIVerticle
+import paths.services.auth.AuthVerticle
+import paths.services.auth.AuthVerticleV2
 
 
 @Suppress("unused")
@@ -63,13 +62,13 @@ class MainVerticle : AbstractVerticle() {
 
         vertx.deployVerticle(name, opts, {
             if(it.failed()){
-                System.out.println("Failed to deploy verticle " + name);
-                done.fail(it.cause());
+                System.out.println("Failed to deploy verticle " + name)
+                done.fail(it.cause())
 
             }
             else {
-                System.out.println("Deployed verticle " + name);
-                done.complete();
+                System.out.println("Deployed verticle " + name)
+                done.complete()
             }
         })
 
@@ -81,12 +80,12 @@ class MainVerticle : AbstractVerticle() {
 
         vertx.deployVerticle(name, opts, {
             if(it.failed()){
-                System.out.println("Failed to deploy verticle " + name);
-                done.fail(it.cause());
+                System.out.println("Failed to deploy verticle " + name)
+                done.fail(it.cause())
             }
             else {
-                System.out.println("Deployed verticle " + name);
-                done.complete();
+                System.out.println("Deployed verticle " + name)
+                done.complete()
             }
         })
 
