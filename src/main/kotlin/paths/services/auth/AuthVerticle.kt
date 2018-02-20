@@ -23,7 +23,7 @@ class AuthVerticle : AbstractBusServiceVerticle() {
                 config().getString("auth.keystore.password")
         )
 
-        //
+        // The service implementation
         service = AuthServiceImpl(vertx, options)
 
         // Register the handler

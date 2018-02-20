@@ -52,12 +52,13 @@ dependencies {
     compile "io.vertx:vertx-service-proxy:$vertx_version"
     compile "io.vertx:vertx-shell:$vertx_version"
 
+
     //kapt "io.vertx:vertx-codegen:$vertx_version:processor"
     compileOnly "io.vertx:vertx-codegen:$vertx_version"
 
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.0"
 
-    testCompile "junit:junit:4.12"
+    //testCompile "io.vertx:vertx-junit5:$vertx_version"
     testCompile "io.vertx:vertx-unit:$vertx_version"
 }
 
@@ -66,6 +67,12 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }
 
 task annotationProcessing(type: JavaCompile, group: 'build') { // codegen
@@ -92,10 +99,5 @@ sourceSets {
         java {
             srcDirs += 'src/main/generated'
         }
-    }
-}
-kotlin {
-    experimental {
-        coroutines "enable"
     }
 }

@@ -28,8 +28,8 @@ class MainVerticle : AbstractVerticle() {
                 deploy(AuthVerticle::class.qualifiedName ?: "", serverOpts),
                 deploy(RestApiVerticle::class.qualifiedName ?: "", serverOpts),
                 deploy(SampleServiceBusVerticle::class.qualifiedName ?: "", serverOpts),
-                deploy(SampleServiceBusConsumerVerticle::class.qualifiedName ?: "", serverOpts),
-                deploy("io.vertx.ext.shell.ShellVerticle", serverOpts)
+                deploy(SampleServiceBusConsumerVerticle::class.qualifiedName ?: "", serverOpts)
+                // deploy("io.vertx.ext.shell.ShellVerticle", serverOpts)
 
                 // <-- Add verticle here
 

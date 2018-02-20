@@ -1,76 +1,64 @@
-# About Path2Be(come a better dev)
-This file contains information and notes about the application.
 
-## Path to become a better developer
+# vertx-kotlin-service-starter
 
-The path to become a better developer is fraught with the difficult choices of deciding which material we should consume. Time is limited and researching the information is both time consuming and dangerous. Material that were fantastic at some point become outdated.
+This has for objective to be a basic application that explores 
+the capabilities of vert.x & Kotlin to build microservices.
 
-Path2BeABetterDev solves this issue by crowdsourcing the suggestions.
+It does not provide any actual useful functionality :)
 
-Path:
-    Ordered list of reference material:
-        Books: By ISBN from Amazon
-        Video: Youtube / ... ?
-        Educational link: 
-        Links:
+## Done
 
-    Description: 
-        text: [125 ch]
-        Starting Level: [Novice, Beginner, Intermediate, Advanced, Expert]
-        Ending Level:
+- Basic vert.x & Kotlin project
+- HTTP verticle
+- API using OpenAPI3 Router Factory
+- Coroutines based verticle example
+- Bus service verticle
+- Auto-generated proxy for bus services
 
-    Tags: ["List of tags"]
+## Todo
 
-    Comments/Ratings: [{
-        User: {}
-        Rating: [Up, Down, Meh]
-        Text: "optional comment"
-    }*]
+- Security
+- Testing
+- Logging
+- Monitoring
+- Scaling
+- Deployment configuration
 
 
-Material:
-    Type: [Book, Video, Link]
-    Name: [200 ch]
-    Link: [Url]
-    ....
-    Author: ....
-    Price: 0.....+
-    Alternatives: [List of alternative material (Path+Material)]
+## Issues
 
-    Comments/Ratings: [{
-        User: {}
-        Rating: [Up, Down, Meh]
-        Text: "optional comment"
-    }*]
+- Change monitoring and redeployment in vertx doesn't work well with gradle and cause 
+port already in use exception.
+
+- I can't figure out how to generate the proxy and client class for the service from Kotlin interface so I'm using java interface
 
 
-Monetize: 
-    Referal links to Amazon, .. etc..
 
-## About the Stack
-    API Format: REST & GraphQl
+## Some useful command to remember
 
-    [BACKEND]
-        Language: Kotlin
-        Web Framework: Spring Boot
-        ORM:
-        Database:
-        Cache:
-        Logging:  SLF4J compatible (Logback)
-        Service Bus:
-        Queue:
-        Server: Netty || Jetty || Undertow
-        Documentation: Dokka?
+** How to set up gradle wrapper
 
-    [FRONTEND]
-        Language: Javascript
-        Framework: Vue.js
+    gradle wrapper
+
+** How to run this example with auto-recompile
+
+    ./gradlew vertxRun
+
+** How to build a "fat jar"
+
+    ./gradlew shadowJar
+
+** How to run the fat jar
+
+    java -jar build/libs/simple-project-fat.jar,
 
 
-## How to manually test:
+** How to kill all running vertx instances when gradle barf and doesn't release them
 
-curl -D - -H 'Content-Type: application/json' -X GET  http://localhost:5000/user/1/books
-curl -D - -H 'Content-Type: application/json' -X GET  http://localhost:5000/user/1/books/3
-curl -D - -H 'Content-Type: application/json' -X DELETE http://localhost:5000/user/1/books/3
-curl -D - -H 'Content-Type: application/json' -X POST -d '{"id":1, "title":"hello", "author":"joe"}' http://localhost:8090/user/1/books
-curl -D - -H 'Content-Type: application/json' -X PUT -d '{"id":1, "title":"hello", "author":"joe"}' http://localhost:8090/user/1/books
+    pkill -9 -f io.vertx.core.Launcher
+
+
+** Update Kotlin runtime
+
+ - change kotlin version in build.gradle
+ - run gradlew ?

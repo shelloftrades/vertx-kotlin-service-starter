@@ -34,7 +34,6 @@ class RestApiVerticle : AbstractHttpServiceVerticle() {
         // Install the handlers
         factory.addHandlerByOperationId("authenticate-password", Handler<RoutingContext>(this::authenticate))
         factory.addHandlerByOperationId("getFlows", Handler<RoutingContext>(this::getFlows))
-        factory.addHandlerByOperationId("getTest", Handler<RoutingContext>(this::getTest))
 
         // What's our server port?
         val port = config.getInteger(CONFIG_PORT_KEY, CONFIG_PORT_DEFAULT)
@@ -100,29 +99,29 @@ class RestApiVerticle : AbstractHttpServiceVerticle() {
                 .end("Not implemented")
     }
 
-    private fun getTest(context: RoutingContext) {
-
-        // Example of how to get a service and call it from the registry
-        // (Not needed if we use BUS service)
-        getServiceClientByName("auth-service").setHandler {
-            when {
-                it.succeeded() -> {
-                    val client = it.result()
-                    client.getNow("/auth") { response ->
-                        response.bodyHandler { body ->
-                            val token = body.toString()
-                            // Don't forget to release the service
-                            ServiceDiscovery.releaseServiceObject(discovery, client)
-                            // End the response
-                            context.response().endWithJson(json { obj("token" to token) })
-                        }
-                    }
-                }
-                else -> {
-                    context.response().endWithJson(json { obj("token" to "failed") })
-                }
-            }
-        }
-    }
+//    private fun getTest(context: RoutingContext) {
+//
+//        // Example of how to get a service and call it from the registry
+//        // (Not needed if we use BUS service)
+//        getServiceClientByName("auth-service").setHandler {
+//            when {
+//                it.succeeded() -> {
+//                    val client = it.result()
+//                    client.getNow("/auth") { response ->
+//                        response.bodyHandler { body ->
+//                            val token = body.toString()
+//                            // Don't forget to release the service
+//                            ServiceDiscovery.releaseServiceObject(discovery, client)
+//                            // End the response
+//                            context.response().endWithJson(json { obj("token" to token) })
+//                        }
+//                    }
+//                }
+//                else -> {
+//                    context.response().endWithJson(json { obj("token" to "failed") })
+//                }
+//            }
+//        }
+//    }
 
 }

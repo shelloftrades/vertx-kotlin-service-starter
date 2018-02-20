@@ -20,22 +20,9 @@ servers:
 
 paths:
   /authenticate:
-    post:  # WARNING should be POST and NEVER USE QUERY PARAMETERS!!
+    post:
       description: Authenticate
       operationId: authenticate-password
-#      parameters:
-#        - name: username
-#          in:
-#          description: Username
-#          required: true
-#          schema:
-#            type: string
-#        - name: password
-#          in: query
-#          description: password for the user
-#          required: true
-#          schema:
-#            type: string
       requestBody:
         description: Parameters required to login
         content:
@@ -49,22 +36,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Token'
-        default:
-          $ref: '#/components/responses/500'
-
-  /test:
-    get:
-      description: Test stuff
-      operationId: getTest
-      responses:
-        200:
-          description: Flow response
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Flow'
         default:
           $ref: '#/components/responses/500'
   /flows:
