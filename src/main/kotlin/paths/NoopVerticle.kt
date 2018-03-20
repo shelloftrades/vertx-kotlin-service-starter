@@ -4,7 +4,7 @@ import io.vertx.core.AbstractVerticle
 import io.vertx.core.Future
 
 /**
- * A verticle that does nothing
+ * A verticle that does nothing!
  */
 @Suppress("unused")
 class NoopVerticle : AbstractVerticle() {
