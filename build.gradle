@@ -80,7 +80,7 @@ run {
     args = ['run', mainVerticleName,
             "--help",
             "--launcher-class=$mainClassName",
-            "--config=$config",
+            "--conf=$config",
             "--redeploy=src/**/*.*",
             "--on-redeploy=./gradlew classes"
     ]
