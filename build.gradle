@@ -1,38 +1,37 @@
 buildscript {
+
     ext.kotlin_version = '1.2.21'
     ext.vertx_version = '3.5.1'
 
+
     repositories {
+        mavenCentral()
         jcenter()
     }
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.github.jengelman.gradle.plugins:shadow:2.0.2"
     }
 }
 
-plugins {
-    id 'io.vertx.vertx-plugin' version '0.0.4'
-}
-
-group 'Path2Learn'
-version '1.0-SNAPSHOT'
-
 apply plugin: 'kotlin'
-//apply plugin: 'kotlin-kapt'
-
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 repositories {
+    mavenCentral()
     jcenter()
 }
 
-vertx {
-    mainClassName = "paths.MainVerticleKt"
-    mainVerticle = "paths.MainVerticle"
-    vertxVersion = "3.5.1"
-    config = "src/main/resources/application-conf.json"
-    // redeploy = false  //  -> The command '--conf' is not a valid command.
-    // onRedeploy = ["hello"]  // Doesn't seem to do anything.
-}
+version = '0.0.1'
+group = 'paths'
+description = 'A sample vertx project'
+sourceCompatibility = '1.8'
+mainClassName = 'io.vertx.core.Launcher'
+def mainVerticleName = 'paths.MainVerticle'
+def config = "src/main/resources/application-conf.json"
 
 dependencies {
 
@@ -53,20 +52,20 @@ dependencies {
     compile "io.vertx:vertx-shell:$vertx_version"
 
 
-    //kapt "io.vertx:vertx-codegen:$vertx_version:processor"
+    // kapt "io.vertx:vertx-codegen:$vertx_version:processor"
     compileOnly "io.vertx:vertx-codegen:$vertx_version"
 
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.0"
 
     //testCompile "io.vertx:vertx-junit5:$vertx_version"
     testCompile "io.vertx:vertx-unit:$vertx_version"
+
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 kotlin {
@@ -74,6 +73,31 @@ kotlin {
         coroutines "enable"
     }
 }
+
+
+// Redeploy watcher.
+run {
+    args = ['run', mainVerticleName,
+            "--help",
+            "--launcher-class=$mainClassName",
+            "--config=$config",
+            "--redeploy=src/**/*.*",
+            "--on-redeploy=./gradlew classes"
+    ]
+}
+
+
+
+shadowJar {
+    //classifier = 'fat'
+    manifest {
+        attributes 'Main-Verticle': "$mainVerticleName"
+    }
+    mergeServiceFiles {
+        include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+    }
+}
+
 
 task annotationProcessing(type: JavaCompile, group: 'build') { // codegen
     source = sourceSets.main.java
@@ -100,4 +124,9 @@ sourceSets {
             srcDirs += 'src/main/generated'
         }
     }
+}
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.6'
 }
